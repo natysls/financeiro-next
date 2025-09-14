@@ -1,0 +1,28 @@
+import Link from "next/link";
+import Image from "next/image";
+
+export function Header() {
+  return (
+    <header className="w-full p-4 bg-green-600 text-white">
+      <div className="flex items-center justify-between">
+        <Image
+          src="https://www.ceara.gov.br/wp-content/uploads/2023/10/logotipo-governo-do-ceara-2023.svg"
+          alt="Logo"
+          width={200}
+          height={200}
+          className="mr-4"
+          priority
+        />
+        <div className="text-lg font-bold">
+          Financeiro SOP
+        </div>
+      </div>
+      <nav>
+        <ul className="flex space-x-4">
+          <li><Link href='/'>Home</Link></li>
+          <li><Link href='/despesas'>Despesas</Link></li>
+        </ul>
+      </nav>
+    </header>
+  );
+}

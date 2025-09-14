@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Financeiro SOP
 
-## Getting Started
+Este é um sistema financeiro frontend desenvolvido para o Teste prático da Superintendência de Obras Públicas do Ceará, utilizando Next.js, Redux e Axios.
 
-First, run the development server:
+## Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js**: Framework React para aplicações web modernas.
+- **Redux Toolkit**: Gerenciamento global de estado.
+- **Axios**: Cliente HTTP para requisições à API.
+- **Tailwind CSS**: Estilização rápida e responsiva.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalação e Execução
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone o repositório:**
+   ```sh
+   git clone https://github.com/seu-usuario/financeiro-next.git
+   cd financeiro-next
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Instale as dependências:**
+   ```sh
+   npm install
+   ```
+3. **Prepare o projeto :**
+   ```sh
+   npm run build
+   ```
+4. **Inicie o servidor de desenvolvimento:**
+   ```sh
+   npm run dev
+   ```
 
-## Learn More
+4. O projeto estará disponível em [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+## Gerenciamento de Estado
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+O projeto utiliza **Redux Toolkit** para gerenciar o estado global das despesas e outras entidades.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Requisições HTTP
 
-## Deploy on Vercel
+As requisições à API são feitas utilizando **Axios**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Rotas da API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **GET `/despesa`**  
+  Retorna a lista de despesas cadastradas.
+
+- **POST `/despesa`**  
+  Cadastra uma nova despesa.  
+  Exemplo de payload:
+  ```json
+  {
+    "numeroProtocolo": "12345",
+    "tipoDespesa": "Material",
+    "credor": "Fornecedor X",
+    "descricao": "Compra de materiais",
+    "valor": 1000.00
+  }
+  ```
+
+## Estrutura de Pastas
+
+- `src/app/` — Páginas e layouts do Next.js
+- `src/store/` — Configuração do Redux e slices
+- `src/components/` — Componentes reutilizáveis
+
+## Observações
+
+- Certifique-se de que a API backend esteja rodando e acessível: [http://localhost:8080](http://localhost:8080).
+
+---
+
