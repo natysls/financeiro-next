@@ -15,12 +15,14 @@ export interface Despesa {
 
 interface DespesaState {
   lista: Despesa[];
+  selecionada: Despesa | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: DespesaState = {
   lista: [],
+  selecionada: null,
   loading: false,
   error: null,
 };
@@ -40,6 +42,12 @@ const despesaSlice = createSlice({
     addDespesa: (state, action: PayloadAction<Despesa>) => {
       state.lista.push(action.payload);
     },
+    setDespesaSelecionada(state, action: PayloadAction<Despesa>) {
+      state.selecionada = action.payload;
+    },
+    clearDespesaSelecionada(state) {
+      state.selecionada = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,5 +66,5 @@ const despesaSlice = createSlice({
     }
 });
 
-export const { setDespesas, addDespesa } = despesaSlice.actions;
+export const { setDespesas, addDespesa, setDespesaSelecionada, clearDespesaSelecionada } = despesaSlice.actions;
 export default despesaSlice.reducer;
