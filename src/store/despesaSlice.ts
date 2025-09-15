@@ -32,6 +32,24 @@ export const fetchDespesas = createAsyncThunk("despesas/fetchAll", async () => {
   return response.data as Despesa[];
 });
 
+export const updateDespesa = createAsyncThunk(
+  "despesas/update",
+  async (d: Despesa) => {
+    const updated = await atualizarDespesa(d);
+    return updated;
+  }
+);
+
+export const atualizarDespesa = async (d: Despesa) => {
+  if (!d.id) throw new Error("Despesa sem ID não pode ser atualizada");
+
+  const response = await axios.put<Despesa>(
+    `http://localhost:8080/despesa/${d.id}`,
+    d
+  );
+  return response.data;
+};
+
 const despesaSlice = createSlice({
   name: "despesas",
   initialState,
@@ -62,8 +80,15 @@ const despesaSlice = createSlice({
       .addCase(fetchDespesas.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Erro ao buscar despesas";
+      })
+      .addCase(updateDespesa.fulfilled, (state, action) => {
+        const index = state.lista.findIndex((d) => d.id === action.payload.id);
+        if (index >= 0) state.lista[index] = action.payload; // atualiza lista
+        if (state.selecionada?.id === action.payload.id) {
+          state.selecionada = action.payload; // atualiza despesa selecionada
+        }
       });
-    }
+  }
 });
 
 export const { setDespesas, addDespesa, setDespesaSelecionada, clearDespesaSelecionada } = despesaSlice.actions;
