@@ -1,15 +1,19 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { Despesa, fetchDespesas, setDespesaSelecionada } from "../../store/despesaSlice";
+import { Despesa, fetchDespesas, setDespesaSelecionada, deleteDespesa } from "../../store/despesaSlice";
+import { addNotification, removeNotification } from "../../store/notificationSlice";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import ConfirmModal from "@/components/confirmModal";
 
 export default function DespesasPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { lista, loading, error } = useSelector((state: RootState) => state.despesas);
+  const [open, setOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     dispatch(fetchDespesas());
@@ -21,9 +25,25 @@ export default function DespesasPage() {
     router.push("/despesas/cadastro"); // redireciona
   };
 
-  function onDelete(id: number | undefined): void {
-    throw new Error("Function not implemented.");
-  }
+  const handleDeleteClick = (id: number) => {
+    setIdToDelete(id);
+    setOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (idToDelete !== null) {
+      dispatch(deleteDespesa(idToDelete))
+      .unwrap()
+      .then(() => {
+        dispatch(addNotification({type: "success", message: "Despesa removida com sucesso."}));
+      })
+      .catch(() => {
+        dispatch(addNotification({type: "error", message: "Erro ao remover despesa."}));
+      });
+    }
+    setOpen(false);
+    setIdToDelete(null);
+  };
 
   return (
     <div className="p-4">
@@ -80,7 +100,7 @@ export default function DespesasPage() {
                   </button>
 
                   <button
-                    onClick={() => onDelete(d.id)}
+                    onClick={() => handleDeleteClick(d.id!)}
                     className="p-1 rounded"
                   >
                     <Image
@@ -96,6 +116,14 @@ export default function DespesasPage() {
           </tbody>
         </table>
       )}
+
+      <ConfirmModal
+        isOpen={open}
+        title="Confirmar Exclusão"
+        message="Deseja remover esta despesa?"
+        onConfirm={confirmDelete}
+        onCancel={() => setOpen(false)}
+      />
     </div>
   );
 }

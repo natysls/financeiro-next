@@ -50,6 +50,14 @@ export const atualizarDespesa = async (d: Despesa) => {
   return response.data;
 };
 
+export const deleteDespesa = createAsyncThunk(
+  "despesas/delete",
+  async (id: number) => { 
+    await axios.delete(`http://localhost:8080/despesa/${id}`);
+    return id;
+  }
+);
+
 const despesaSlice = createSlice({
   name: "despesas",
   initialState,
@@ -86,6 +94,12 @@ const despesaSlice = createSlice({
         if (index >= 0) state.lista[index] = action.payload; // atualiza lista
         if (state.selecionada?.id === action.payload.id) {
           state.selecionada = action.payload; // atualiza despesa selecionada
+        }
+      })
+      .addCase(deleteDespesa.fulfilled, (state, action: PayloadAction<number>) => {
+        state.lista = state.lista.filter((d) => d.id !== action.payload);
+        if (state.selecionada?.id === action.payload) {
+          state.selecionada = null; // limpa se a despesa deletada estava selecionada
         }
       });
   }

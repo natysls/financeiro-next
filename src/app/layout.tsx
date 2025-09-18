@@ -2,6 +2,7 @@ import "./globals.css";
 import { Header } from "../components/header";
 import { Metadata } from "next";
 import ReduxProvider from "./ReduxProvider";
+import Notification from "../components/notification";
 
 export const metadata: Metadata = {
   title: "Financeiro SOP",
@@ -32,8 +33,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`antialiased`}>
-        <Header />
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <Header />
+          <Notification />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
