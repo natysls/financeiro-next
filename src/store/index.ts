@@ -3,6 +3,8 @@ import despesaReducer from "./despesaSlice";
 import tipoDespesaReducer from "./tipoDespesaSlice";
 import statusReducer from "./statusSlice";
 import notificationReducer from "./notificationSlice";
+import usuarioReducer from "./usuarioSlice";
+import roleReducer from "./rolesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     tipoDespesa: tipoDespesaReducer,
     status: statusReducer,
     notification: notificationReducer,
+    usuarios: usuarioReducer,
+    roles: roleReducer,
   },
 });
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { Despesa, fetchDespesas, setDespesaSelecionada, deleteDespesa } from "../../store/despesaSlice";
-import { addNotification, removeNotification } from "../../store/notificationSlice";
+import { addNotification } from "../../store/notificationSlice";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

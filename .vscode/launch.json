@@ -16,7 +16,10 @@
             "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
-            ]
+            ],
+            "env": {
+                "NODE_OPTIONS": "--inspect"
+            }
         }
     ]
 }
