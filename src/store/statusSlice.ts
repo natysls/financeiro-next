@@ -1,5 +1,5 @@
+import api from "@/api/axiosConfig";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export interface Status {
   value: string;
@@ -23,7 +23,7 @@ const initialState: StatusState = {
 export const fetchStatus = createAsyncThunk(
   "status/fetchTipos",
   async () => {
-    const response = await axios.get("http://localhost:8080/status");
+    const response = await api.get("http://localhost:8080/status");
     return response.data as Status[];
   }
 );

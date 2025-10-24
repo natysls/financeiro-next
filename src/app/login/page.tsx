@@ -10,7 +10,8 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     
     async function loginUser() {    
-        await login(username, password);
+        const token = await login(username, password);
+        console.log("Token recebido:", token);
         redirect("/");
     }
 

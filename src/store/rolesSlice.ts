@@ -1,6 +1,5 @@
+import api from "@/api/axiosConfig";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
 export interface Role {
   value: string;
   label: string;
@@ -19,11 +18,11 @@ const initialState: RoleState = {
   error: null,
 };
 
-// Thunk para buscar as roles no backend
 export const fetchRole = createAsyncThunk(
-  "role/fetchTipos",
+  "role/fetchRoles",
   async () => {
-    const response = await axios.get("http://localhost:8080/roles-usuario");
+    const response = await api.get("http://localhost:8080/roles_usuario");
+    console.log("Resposta:", response.data);
     return response.data as Role[];
   }
 );

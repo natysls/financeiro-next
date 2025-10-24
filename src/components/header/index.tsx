@@ -10,14 +10,15 @@ export function Header() {
   return (
     <header className="w-full p-4 bg-green-600 text-white">
       <div className="flex items-center justify-between">
-        <Image
-          src="https://www.ceara.gov.br/wp-content/uploads/2023/10/logotipo-governo-do-ceara-2023.svg"
-          alt="Logo"
-          width={200}
-          height={200}
-          className="mr-4"
-          priority
-        />
+        <div className="relative w-45 h-15">
+          <Image
+            src="https://www.ceara.gov.br/wp-content/uploads/2023/10/logotipo-governo-do-ceara-2023.svg"
+            alt="Logo"
+            className="mr-4"
+            fill style={{ objectFit: 'contain' }} 
+            priority
+          />
+        </div>
         <div className="text-lg font-bold">
           Financeiro SOP
         </div>

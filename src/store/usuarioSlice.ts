@@ -1,3 +1,4 @@
+import api from "@/api/axiosConfig";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -21,7 +22,7 @@ const initialState: UsuarioState = {
 };
 
 export const fetchUsuarios = createAsyncThunk("usuarios/fetchAll", async () => {
-  const response = await axios.get("http://localhost:8080/usuario");
+  const response = await api.get("http://localhost:8080/usuario");
   return response.data as Usuario[];
 });
 

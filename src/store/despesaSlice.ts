@@ -1,3 +1,4 @@
+import api from "@/api/axiosConfig";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -28,7 +29,7 @@ const initialState: DespesaState = {
 };
 
 export const fetchDespesas = createAsyncThunk("despesas/fetchAll", async () => {
-  const response = await axios.get("http://localhost:8080/despesa");
+  const response = await api.get("http://localhost:8080/despesa");
   return response.data as Despesa[];
 });
 

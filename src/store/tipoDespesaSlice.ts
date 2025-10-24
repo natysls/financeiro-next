@@ -1,5 +1,5 @@
+import api from "@/api/axiosConfig";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export interface TipoDespesa {
   value: string;
@@ -23,7 +23,9 @@ const initialState: TipoDespesaState = {
 export const fetchTiposDespesa = createAsyncThunk(
   "tipoDespesa/fetchTipos",
   async () => {
-    const response = await axios.get("http://localhost:8080/tipos_despesa");
+    const response = await api.get("http://localhost:8080/tipos_despesa",{
+      withCredentials: true,
+    });
     return response.data as TipoDespesa[];
   }
 );

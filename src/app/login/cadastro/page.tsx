@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store";
 import { Usuario, add, updateUsuario } from "@/store/usuarioSlice";
 import { addNotification } from "../../../store/notificationSlice";
+import { fetchRole } from "../../../store/rolesSlice";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
@@ -11,14 +12,17 @@ import FloatingInput from "@/components/floatingInput";
 
 export default function CadastroUsuarioPage() {
     const dispatch = useDispatch<AppDispatch>();
-    const { lista, loading, error } = useSelector((state: RootState) => state.usuarios);
+    const { list: roles } = useSelector((state: RootState) => state.roles);
+    const router = useRouter();
     const [form, setForm] = useState<Usuario>({
         email: "",
         senha: "",
         role: "",
     });
-    const router = useRouter();
-    const { list: roles } = useSelector((state: RootState) => state.roles);
+    
+    useEffect(() => {
+        dispatch(fetchRole());
+      }, [dispatch]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -54,7 +58,7 @@ export default function CadastroUsuarioPage() {
 
     return (
         <div className="container mx-auto p-4 flex flex-col items-center justify-center min-h-screen gap-4">
-            <h1> Cadastro de Usuários</h1>
+            <h1>Novo Usuário</h1>
             <form onSubmit={handleSubmit} method="post" 
                 action="/auth/cadastrar"
                 className="flex flex-col gap-2 max-w-md p-4 bg-gray-100 rounded w-full">
@@ -100,16 +104,6 @@ export default function CadastroUsuarioPage() {
                     </button>
                 </div>
             </form>
-
-            {lista.map((user) => (
-                <div key={user.id} className="card">
-                    <div>
-                        <p>Email: <span>{user.email}</span></p>
-                        <p>Senha: <span>{user.senha}</span></p>
-                        <p>Role: <span>{user.role}</span></p>
-                    </div>
-                </div>
-            ))}
         </div>
     );
 }
